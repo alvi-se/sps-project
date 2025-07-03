@@ -55,12 +55,12 @@ cmd -d 'postgres' -c "DROP DATABASE IF EXISTS imdb;"
 cmd -d 'postgres' -c "CREATE DATABASE imdb;"
 
 printf "Creating tables in imdb database \n"
-cmd -d imdb -c "CREATE table title_ratings (tconst VARCHAR(10),average_rating NUMERIC,num_votes integer);"
-cmd -d imdb -c "CREATE TABLE name_basics (nconst varchar(10), primaryName text, birthYear smallint, deathYear smallint, primaryProfession text, knownForTitles text );"
-cmd -d imdb -c "CREATE TABLE title_akas (titleId TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, isOriginalTitle BOOLEAN);"
-cmd -d imdb -c "CREATE TABLE title_basics (tconst TEXT, titleType TEXT, primaryTitle TEXT, originalTitle TEXT, isAdult BOOLEAN, startYear SMALLINT, endYear SMALLINT, runtimeMinutes INTEGER, genres TEXT);"
+cmd -d imdb -c "CREATE TABLE title_ratings (tconst VARCHAR(10), average_rating NUMERIC, num_votes INTEGER);"
+cmd -d imdb -c "CREATE TABLE name_basics (nconst VARCHAR(10), primary_name TEXT, birth_year SMALLINT, death_year SMALLINT, primary_profession TEXT, known_for_titles TEXT);"
+cmd -d imdb -c "CREATE TABLE title_akas (title_id TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, is_original_title BOOLEAN);"
+cmd -d imdb -c "CREATE TABLE title_basics (tconst TEXT, title_type TEXT, primary_title TEXT, original_title TEXT, is_adult BOOLEAN, start_year SMALLINT, end_year SMALLINT, runtime_minutes INTEGER, genres TEXT);"
 cmd -d imdb -c "CREATE TABLE title_crew (tconst TEXT, directors TEXT, writers TEXT);"
-cmd -d imdb -c "CREATE TABLE title_episode (const TEXT, parentTconst TEXT, seasonNumber TEXT, episodeNumber TEXT);"
+cmd -d imdb -c "CREATE TABLE title_episode (const TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);"
 cmd -d imdb -c "CREATE TABLE title_principals (tconst TEXT, ordering INTEGER, nconst TEXT, category TEXT, job TEXT, characters TEXT);"
 
 printf "Inserting data into tables \n"
@@ -73,5 +73,4 @@ cmd -d imdb -c "COPY title_episode FROM '$(pwd)/imdb-datasets/title.episode.tsv'
 cmd -d imdb -c "COPY title_principals FROM '$(pwd)/imdb-datasets/title.principals.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
 
 printf "Done! \n"
-
 printf "Script done at %s. \n" "$(date)"

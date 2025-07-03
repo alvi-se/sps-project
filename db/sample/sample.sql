@@ -3,14 +3,13 @@
 ------------------------------------------------------------------------
 
 
-CREATE TABLE title_ratings (tconst VARCHAR(10),average_rating NUMERIC,num_votes integer);
-CREATE TABLE name_basics (nconst varchar(10), primaryName text, birthYear smallint, deathYear smallint, primaryProfession text, knownForTitles text );
-CREATE TABLE title_akas (titleId TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, isOriginalTitle BOOLEAN);
-CREATE TABLE title_basics (tconst TEXT, titleType TEXT, primaryTitle TEXT, originalTitle TEXT, isAdult BOOLEAN, startYear SMALLINT, endYear SMALLINT, runtimeMinutes INTEGER, genres TEXT);
+CREATE TABLE title_ratings (tconst VARCHAR(10), average_rating NUMERIC, num_votes INTEGER);
+CREATE TABLE name_basics (nconst VARCHAR(10), primary_name TEXT, birth_year SMALLINT, death_year SMALLINT, primary_profession TEXT, known_for_titles TEXT);
+CREATE TABLE title_akas (title_id TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, is_original_title BOOLEAN);
+CREATE TABLE title_basics (tconst TEXT, title_type TEXT, primary_title TEXT, original_title TEXT, is_adult BOOLEAN, start_year SMALLINT, end_year SMALLINT, runtime_minutes INTEGER, genres TEXT);
 CREATE TABLE title_crew (tconst TEXT, directors TEXT, writers TEXT);
-CREATE TABLE title_episode (const TEXT, parentTconst TEXT, seasonNumber TEXT, episodeNumber TEXT);
+CREATE TABLE title_episode (const TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);
 CREATE TABLE title_principals (tconst TEXT, ordering INTEGER, nconst TEXT, category TEXT, job TEXT, characters TEXT);
-
 
 -- Esempio per la tabella title_ratings
 INSERT INTO title_ratings (tconst, average_rating, num_votes) VALUES
@@ -21,7 +20,7 @@ INSERT INTO title_ratings (tconst, average_rating, num_votes) VALUES
 ('tt0000005', 6.2, 163);
 
 -- Esempio per la tabella name_basics
-INSERT INTO name_basics (nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles) VALUES
+INSERT INTO name_basics (nconst, primary_name, birth_year, death_year, primary_profession, known_for_titles) VALUES
 ('nm0000001', 'Fred Astaire', 1899, 1987, 'actor,soundtrack,producer', 'tt0053133,tt0050419,tt0031983,tt0043044'),
 ('nm0000002', 'Lauren Bacall', 1924, 2014, 'actress,soundtrack', 'tt0038355,tt0071877,tt0046808,tt0117057'),
 ('nm0000003', 'Brigitte Bardot', 1934, NULL, 'actress,soundtrack,music_department', 'tt0057345,tt0049189,tt0054452,tt0060399'),
@@ -29,7 +28,7 @@ INSERT INTO name_basics (nconst, primaryName, birthYear, deathYear, primaryProfe
 ('nm0000005', 'Ingmar Bergman', 1918, 2007, 'director,writer,actor', 'tt0050986,tt0069467,tt0083922,tt0060827');
 
 -- Esempio per la tabella title_akas
-INSERT INTO title_akas (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) VALUES
+INSERT INTO title_akas (title_id, ordering, title, region, language, types, attributes, is_original_title) VALUES
 ('tt0000001', 1, 'Carmencita', 'US', NULL, 'imdbDisplay', NULL, TRUE),
 ('tt0000001', 2, 'Carmencita - spanyol tánc', 'HU', NULL, 'alternative', NULL, FALSE),
 ('tt0000002', 1, 'Le clown et ses chiens', 'FR', NULL, 'imdbDisplay', NULL, TRUE),
@@ -37,7 +36,7 @@ INSERT INTO title_akas (titleId, ordering, title, region, language, types, attri
 ('tt0000003', 1, 'Pauvre Pierrot', 'FR', NULL, 'imdbDisplay', NULL, TRUE);
 
 -- Esempio per la tabella title_basics
-INSERT INTO title_basics (tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres) VALUES
+INSERT INTO title_basics (tconst, title_type, primary_title, original_title, is_adult, start_year, end_year, runtime_minutes, genres) VALUES
 ('tt0000001', 'short', 'Carmencita', 'Carmencita', FALSE, 1894, NULL, 1, 'Documentary,Short'),
 ('tt0000002', 'short', 'Le clown et ses chiens', 'Le clown et ses chiens', FALSE, 1892, NULL, 5, 'Animation,Short'),
 ('tt0000003', 'short', 'Pauvre Pierrot', 'Pauvre Pierrot', FALSE, 1892, NULL, 4, 'Animation,Comedy,Short'),
@@ -53,7 +52,7 @@ INSERT INTO title_crew (tconst, directors, writers) VALUES
 ('tt0000005', 'nm0005690', NULL);
 
 -- Esempio per la tabella title_episode
-INSERT INTO title_episode (const, parentTconst, seasonNumber, episodeNumber) VALUES
+INSERT INTO title_episode (const, parent_tconst, season_number, episode_number) VALUES
 ('tt0041102', 'tt0041038', '1', '1'),
 ('tt0041109', 'tt0041038', '1', '2'),
 ('tt0041116', 'tt0041038', '1', '3'),
