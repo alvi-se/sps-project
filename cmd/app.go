@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
-import "gorm.io/gorm"
-import "gorm.io/driver/postgres"
-import "github.com/alvi-se/sps-project/pkg/models"
+import (
+	"fmt"
+
+	"github.com/alvi-se/sps-project/internal/routes"
+	"github.com/alvi-se/sps-project/pkg/models"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
 
 func main() {
 	db, dbErr := gorm.Open(
@@ -17,7 +22,17 @@ func main() {
 	}
 
 	var title models.TitleBasic
-	db.First(&title)
+	db.First(&title).Preload("Ratings")
 
 	fmt.Println("Title:", title.OriginalTitle)
+	fmt.Println("Rating:", title.Ratings.AverageRating)
+
+
+
+	router := gin.Default()
+	router.LoadHTMLGlob("templates/**/*")
+
+	routes.AddRoutes(router)
+
+	router.Run()
 }

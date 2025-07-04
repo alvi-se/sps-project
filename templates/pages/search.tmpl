@@ -1,0 +1,23 @@
+{{define "pages/search.tmpl"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search: {{.query}}</title>
+        {{template "includes/head.tmpl"}}
+    </head>
+    <body>
+        {{template "includes/nav.tmpl"}}
+        <main class="container">
+            <form action="/search" method="get">
+            <fieldset role="group">
+                <input type="text" id="q" name="q" placeholder="Enter movie title..." value="{{ .query }}">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </fieldset>
+            </form>
+            <p aria-busy="true">Loading search results...</p>
+        </main>
+
+    </body>
+</html>
+{{end}}
+

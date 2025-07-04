@@ -1,0 +1,20 @@
+{{define "pages/index.tmpl"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IMDb 2.0</title>
+        {{template "includes/head.tmpl"}}
+    </head>
+    <body>
+        {{template "includes/nav.tmpl"}}
+        <main class="container">
+            <form action="/search" method="get">
+                <label for="search">Search for a movie:</label>
+                <input type="text" id="q" name="q" placeholder="Enter movie title...">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </form>
+        </main>
+    </body>
+</html>
+{{end}}
+
