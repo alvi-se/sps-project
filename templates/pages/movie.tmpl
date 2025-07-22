@@ -1,14 +1,14 @@
-{{define "pages/index.tmpl"}}
+{{define "pages/movie.tmpl"}}
 <!DOCTYPE html>
 <html>
     <head>
-        <title>IMDb 2.0</title>
+        <title>{{.title.PrimaryTitle}} | IMDb 2.0</title>
         {{template "includes/head.tmpl"}}
     </head>
     <body>
         {{template "includes/nav.tmpl"}}
         <main class="container">
-            Search a movie to get started!
+            <h1>{{.title.PrimaryTitle}}</h1>
         </main>
     </body>
 </html>

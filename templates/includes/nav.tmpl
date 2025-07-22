@@ -2,12 +2,17 @@
 <div class="container">
     <nav>
         <ul>
-            <li><strong>IMDb 2</strong></li>
+            <li><strong><a href="/">IMDb 2</a></strong></li>
         </ul>
         <ul>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Products</a></li>
+            <li>
+            <form action="/search" method="get">
+                <fieldset role="group">
+                    <input type="text" name="q" placeholder="Search..." required>
+                    <button type="submit" class="primary"><i class="bi bi-search"></i></button>
+                </fieldset>
+            </form>
+            </li>
         </ul>
     </nav>
 </div>
