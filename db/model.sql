@@ -11,6 +11,9 @@ CREATE TABLE title_basics (
     genres TEXT[]
 );
 
+-- We're going to search only on primary_title for simplicity
+CREATE INDEX idx_title_basics_primary_title ON title_basics (primary_title);
+
 -- Actors
 CREATE TABLE name_basics (
     nconst VARCHAR(10) PRIMARY KEY,
