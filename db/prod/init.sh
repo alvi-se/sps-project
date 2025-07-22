@@ -60,7 +60,7 @@ cmd -d imdb -c "CREATE TABLE name_basics (nconst VARCHAR(10), primary_name TEXT,
 cmd -d imdb -c "CREATE TABLE title_akas (title_id TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, is_original_title BOOLEAN);"
 cmd -d imdb -c "CREATE TABLE title_basics (tconst TEXT, title_type TEXT, primary_title TEXT, original_title TEXT, is_adult BOOLEAN, start_year SMALLINT, end_year SMALLINT, runtime_minutes INTEGER, genres TEXT);"
 cmd -d imdb -c "CREATE TABLE title_crew (tconst TEXT, directors TEXT, writers TEXT);"
-cmd -d imdb -c "CREATE TABLE title_episode (const TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);"
+cmd -d imdb -c "CREATE TABLE title_episode (tconst TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);"
 cmd -d imdb -c "CREATE TABLE title_principals (tconst TEXT, ordering INTEGER, nconst TEXT, category TEXT, job TEXT, characters TEXT);"
 
 printf "Inserting data into tables \n"

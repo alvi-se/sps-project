@@ -8,7 +8,7 @@ CREATE TABLE name_basics (nconst VARCHAR(10), primary_name TEXT, birth_year SMAL
 CREATE TABLE title_akas (title_id TEXT, ordering INTEGER, title TEXT, region TEXT, language TEXT, types TEXT, attributes TEXT, is_original_title BOOLEAN);
 CREATE TABLE title_basics (tconst TEXT, title_type TEXT, primary_title TEXT, original_title TEXT, is_adult BOOLEAN, start_year SMALLINT, end_year SMALLINT, runtime_minutes INTEGER, genres TEXT);
 CREATE TABLE title_crew (tconst TEXT, directors TEXT, writers TEXT);
-CREATE TABLE title_episode (const TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);
+CREATE TABLE title_episode (tconst TEXT, parent_tconst TEXT, season_number TEXT, episode_number TEXT);
 CREATE TABLE title_principals (tconst TEXT, ordering INTEGER, nconst TEXT, category TEXT, job TEXT, characters TEXT);
 
 -- Esempio per la tabella title_ratings
@@ -52,7 +52,7 @@ INSERT INTO title_crew (tconst, directors, writers) VALUES
 ('tt0000005', 'nm0005690', NULL);
 
 -- Esempio per la tabella title_episode
-INSERT INTO title_episode (const, parent_tconst, season_number, episode_number) VALUES
+INSERT INTO title_episode (tconst, parent_tconst, season_number, episode_number) VALUES
 ('tt0041102', 'tt0041038', '1', '1'),
 ('tt0041109', 'tt0041038', '1', '2'),
 ('tt0041116', 'tt0041038', '1', '3'),
