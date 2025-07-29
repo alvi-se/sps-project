@@ -10,11 +10,22 @@
         <main class="container">
             <form action="/search" method="get">
             <fieldset role="group">
-                <input type="text" id="q" name="q" placeholder="Enter movie title..." value="{{ .query }}">
+                <input type="text" id="q" name="q" placeholder="Enter movie title..." value="{{.query}}">
                 <input type="submit" value="Search" class="btn btn-primary">
             </fieldset>
             </form>
-            <p aria-busy="true">Loading search results...</p>
+            <div>
+            <h2>Search results for "{{.query}}"</h2>
+            {{range .titles}}
+            <article>
+            <header>
+                <a href="/movies/{{.Tconst}}">{{.PrimaryTitle}}</a>
+            </header>
+            {{.StartYear}}{{if .EndYear -}} -{{- .EndYear}}{{end}} &bull; {{.TitleType}}
+            <footer>{{.Genres}}</footer>
+            </article>
+            {{end}}
+            </div>
         </main>
 
     </body>

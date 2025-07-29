@@ -36,9 +36,22 @@ func (rc *RouteController) Home(c *gin.Context) {
 }
 
 func (rc *RouteController) Search(c *gin.Context) {
-	// TODO implement real search
 	if query := c.Query("q"); query != "" {
-		c.HTML(200, "pages/search.tmpl", gin.H{"query": query})
+		var titles []models.TitleBasic
+		result := rc.db.Where("primary_title ILIKE ?", fmt.Sprintf("%v%%", query)).Find(&titles)
+
+		if result.Error != nil {
+			// If the error is not a "record not found" error, log it
+			if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				log.Printf("Error fetching movies with query %v: %v", query, result.Error)
+			}
+
+			// Return empty set
+			c.HTML(200, "pages/search.tmpl", gin.H{"query": query, "titles": []models.TitleBasic{}})
+			return
+		}
+
+		c.HTML(200, "pages/search.tmpl", gin.H{"query": query, "titles": titles})
 	} else {
 		c.Redirect(302, "/")
 	}
@@ -55,11 +68,10 @@ func (rc *RouteController) Movie(c *gin.Context) {
 	var title *models.TitleBasic
 	result := rc.db.First(&title, "tconst = ?", id)
 
-
 	if result.Error != nil {
 		// If the error is not a "record not found" error, log it
 		if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			log.Printf("Error fetching movie with ID %s: %v", id, result.Error)
+			log.Printf("Error fetching movie with ID %v: %v", id, result.Error)
 		}
 
 		c.HTML(404, "pages/404.tmpl", gin.H{})
