@@ -1,22 +1,19 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/alvi-se/sps-project/internal/routes"
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"github.com/jackc/pgx/v5"
 )
 
 func main() {
-	db, dbErr := gorm.Open(
-		postgres.Open("host=localhost user=postgres password=postgres dbname=imdb port=5432 sslmode=disable TimeZone=Europe/Rome"),
-		&gorm.Config{},
-	)
+	db, err := pgx.Connect(context.Background(), "host=localhost user=postgres password=postgres dbname=imdb port=5432 sslmode=disable TimeZone=Europe/Rome")
 
-	if dbErr != nil {
-		log.Fatalln("Error connecting to the database:", dbErr)
+	if err != nil {
+		log.Fatalln("Error connecting to the database:", err)
 	}
 
 	router := gin.Default()

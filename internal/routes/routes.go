@@ -1,22 +1,23 @@
 package routes
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
 
 	"github.com/alvi-se/sps-project/pkg/models"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
+	"github.com/jackc/pgx/v5"
 )
 
 type RouteController struct {
-	db *gorm.DB
+	db *pgx.Conn
 }
 
 var controller *RouteController
 
-func InitController(db *gorm.DB) error {
+func InitController(db *pgx.Conn) error {
 	if db == nil {
 		return fmt.Errorf("database connection is nil")
 	}
@@ -37,17 +38,25 @@ func (rc *RouteController) Home(c *gin.Context) {
 
 func (rc *RouteController) Search(c *gin.Context) {
 	if query := c.Query("q"); query != "" {
-		var titles []models.TitleBasic
-		result := rc.db.Where("primary_title ILIKE ?", fmt.Sprintf("%v%%", query)).Find(&titles)
+		rows, err := controller.db.Query(context.Background(), `
+			SELECT * FROM title_basics WHERE primary_title ILIKE '%' || $1 || '%'
+			`, query)
 
-		if result.Error != nil {
-			// If the error is not a "record not found" error, log it
-			if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
-				log.Printf("Error fetching movies with query %v: %v", query, result.Error)
-			}
+		if err != nil {
+			log.Println("Error searching titles:", err)
+			c.HTML(500, "pages/500.tmpl", gin.H{})
+			return
+		}
 
-			// Return empty set
-			c.HTML(200, "pages/search.tmpl", gin.H{"query": query, "titles": []models.TitleBasic{}})
+		titles, err := pgx.CollectRows(rows, pgx.RowToStructByPos[models.TitleBasic])
+
+		for _, value := range titles {
+			log.Println(value)
+		}
+
+		if err != nil {
+			log.Println("Error searching titles:", err)
+			c.HTML(500, "pages/500.tmpl", gin.H{})
 			return
 		}
 
@@ -65,16 +74,26 @@ func (rc *RouteController) Movies(c *gin.Context) {
 func (rc *RouteController) Movie(c *gin.Context) {
 	id := c.Param("id")
 
-	var title *models.TitleBasic
-	result := rc.db.First(&title, "tconst = ?", id)
+	rows, err := rc.db.Query(
+		context.Background(),
+		"SELECT * FROM title_basics WHERE tconst = $1",
+		id)
 
-	if result.Error != nil {
-		// If the error is not a "record not found" error, log it
-		if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			log.Printf("Error fetching movie with ID %v: %v", id, result.Error)
+	if err != nil {
+		log.Println("Error querying title:", err)
+		c.HTML(500, "pages/500.tmpl", gin.H{})
+		return
+	}
+
+	title, err := pgx.CollectExactlyOneRow(rows, pgx.RowToStructByPos[models.TitleBasic])
+
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			c.HTML(404, "pages/404.tmpl", gin.H{})
+		} else {
+			log.Println("Error collecting title:", err)
+			c.HTML(500, "pages/500.tmpl", gin.H{})
 		}
-
-		c.HTML(404, "pages/404.tmpl", gin.H{})
 		return
 	}
 
