@@ -1,12 +1,27 @@
 services:
   db:
-    image: postgres:latest
+    build: .
+    image: sps-postgres:latest
     container_name: sps-postgres
     volumes:
       - ./db/prod/:/docker-entrypoint-initdb.d
+      - sps-postgres-data:/var/lib/postgresql/
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: imdb
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sps-pgadmin
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@example.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+
+volumes:
+  sps-postgres-data:
+

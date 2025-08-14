@@ -1,4 +1,21 @@
--- Movies and TV Shows
+/*
+Movies and TV Shows
+
+title_type can be:
+- movie
+- short
+- tvEpisode
+- tvMiniSeries
+- tvMovie
+- tvSeries
+- tvShort
+- tvSpecial
+- video
+- videoGame
+
+For tvSeries and tvMiniSeries, the end_year ca be NOT NULL. Also they can be joined with title_episode to get the episodes.
+*/
+
 CREATE TABLE title_basics (
     tconst TEXT PRIMARY KEY,
     title_type TEXT,
