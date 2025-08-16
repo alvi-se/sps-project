@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/alvi-se/sps-project/pkg/models"
+	"github.com/alvi-se/sps-project/internal/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
 )
