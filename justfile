@@ -16,5 +16,5 @@ build:
     docker buildx build -t ghcr.io/alvi-se/sps-project:latest .
 
 publish:
-    docker push ghcr.io/yourusername/sps-project:latest
+    docker push ghcr.io/alvi-se/sps-project:latest
 
