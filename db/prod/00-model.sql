@@ -81,11 +81,12 @@ CREATE TABLE title_episode (
 
 -- Actors
 CREATE TABLE title_principals (
-    tconst TEXT PRIMARY KEY,
+    tconst TEXT,
     ordering INTEGER,
     nconst TEXT,
     category TEXT,
     job TEXT,
     characters TEXT,
+    FOREIGN KEY (tconst) REFERENCES title_basics(tconst) ON DELETE CASCADE,
     FOREIGN KEY (nconst) REFERENCES name_basics(nconst) ON DELETE CASCADE
 );

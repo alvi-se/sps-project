@@ -1,5 +1,7 @@
 package models
 
+import "database/sql"
+
 // CREATE TABLE title_basics (tconst TEXT, titleType TEXT, primaryTitle TEXT, originalTitle TEXT, isAdult BOOLEAN, startYear SMALLINT, endYear SMALLINT, runtimeMinutes INTEGER, genres TEXT);
 
 type TitleRatings struct {
@@ -15,7 +17,7 @@ type TitleBasic struct {
 	OriginalTitle  string
 	IsAdult        bool
 	StartYear      int
-	EndYear        *int
-	RuntimeMinutes int
+	EndYear        sql.NullInt64
+	RuntimeMinutes sql.NullInt64
 	Genres         string
 }

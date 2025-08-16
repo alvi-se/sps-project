@@ -25,7 +25,7 @@ CREATE TABLE title_basics (
     start_year SMALLINT,
     end_year SMALLINT,
     runtime_minutes INTEGER,
-    genres TEXT[]
+    genres TEXT
 );
 
 -- We're going to search only on primary_title for simplicity
@@ -37,8 +37,8 @@ CREATE TABLE name_basics (
     primary_name TEXT,
     birth_year SMALLINT,
     death_year SMALLINT,
-    primary_profession TEXT[],
-    known_for_titles TEXT[]
+    primary_profession TEXT,
+    known_for_titles TEXT
 );
 
 -- Reviews
@@ -56,8 +56,8 @@ CREATE TABLE title_akas (
     title TEXT,
     region TEXT,
     language TEXT,
-    types TEXT[],
-    attributes TEXT[],
+    types TEXT,
+    attributes TEXT,
     is_original_title BOOLEAN,
     FOREIGN KEY (title_id) REFERENCES title_basics(tconst) ON DELETE CASCADE
 );
@@ -65,8 +65,8 @@ CREATE TABLE title_akas (
 -- Crew
 CREATE TABLE title_crew (
     tconst TEXT PRIMARY KEY,
-    directors TEXT[],
-    writers TEXT[],
+    directors TEXT,
+    writers TEXT,
     FOREIGN KEY (tconst) REFERENCES title_basics(tconst) ON DELETE CASCADE
 );
 
@@ -76,16 +76,17 @@ CREATE TABLE title_episode (
     parent_tconst TEXT,
     season_number INTEGER,
     episode_number INTEGER,
-    FOREIGN KEY (parent_tconst) REFERENCES title_basics(tconst) ON DELETE CASCADE,
+    FOREIGN KEY (parent_tconst) REFERENCES title_basics(tconst) ON DELETE CASCADE
 );
 
 -- Actors
 CREATE TABLE title_principals (
-    tconst TEXT PRIMARY KEY,
+    tconst TEXT,
     ordering INTEGER,
     nconst TEXT,
     category TEXT,
     job TEXT,
     characters TEXT,
-    FOREIGN KEY (nconst) REFERENCES name_basics(nconst) ON DELETE CASCADE,
+    FOREIGN KEY (tconst) REFERENCES title_basics(tconst) ON DELETE CASCADE,
+    FOREIGN KEY (nconst) REFERENCES name_basics(nconst) ON DELETE CASCADE
 );

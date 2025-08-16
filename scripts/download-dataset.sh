@@ -2,11 +2,11 @@
 
 echo "[+] Script starting at $(date)"
 
-$dataset_dir="$1"
+dataset_dir="$1"
 
 if [[ -z "$dataset_dir" ]]; then
-    echo "[+] Dataset directory not specified, using ./prod/dataset/"
-    dataset_dir="./prod/dataset"
+    dataset_dir="./db/prod/dataset"
+    echo "[+] Dataset directory not specified, using $dataset_dir"
     mkdir -p "$dataset_dir"
 else
     echo "[+] Using dataset directory: $dataset_dir"
