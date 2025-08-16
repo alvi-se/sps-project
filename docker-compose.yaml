@@ -1,7 +1,6 @@
 services:
   db:
-    build: .
-    image: sps-postgres:latest
+    image: postgres:latest
     container_name: sps-postgres
     volumes:
       - ./db/prod/:/docker-entrypoint-initdb.d

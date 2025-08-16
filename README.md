@@ -1,3 +1,37 @@
-https://github.com/soumya-codes/imdb-postgres
-https://github.com/betafcc/imdb-postgres
-https://gist.github.com/IllusiveMilkman/2a7a6614193c74804db7650f6d3c2bd2
+# Software Performance and Scalability Project
+Author: Alvise Favero -- 888851
+Academic Year: 2024/2025
+
+## Build Requirements
+- curl
+- Go
+- Docker
+- [just](https://github.com/casey/just)
+
+## Development
+Run the following commands to have the development app running:
+```sh
+# Development DB
+just dev
+# Go app
+just run
+```
+
+## Production
+The production version downloads the full IMDb dataset and imports it into a Postgres container.
+The dataset is downloaded on the host machine (`./scripts/download-dataset.sh`). This is to allow caching it.
+Then the folder in which it is downloaded is bind mounted into the Postgres Docker container,
+which will import the files using the `COPY FROM` command on the first run (`./db/prod/01-init.sh`).
+
+⚠️Change the Postgres and PgAdmin credentials in the .env file.
+
+```sh
+# Downloads the dataset and puts it into ./db/prod/dataset
+# WARNING -- THIS WILL DOWNLOAD ABOUT 8 GB OF DATA
+just download
+# Runs the DB
+just prod
+# Go app
+just run
+```
+

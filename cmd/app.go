@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/alvi-se/sps-project/internal/routes"
 	"github.com/gin-gonic/gin"
@@ -10,7 +11,9 @@ import (
 )
 
 func main() {
-	db, err := pgx.Connect(context.Background(), "host=localhost user=postgres password=postgres dbname=imdb port=5432 sslmode=disable TimeZone=Europe/Rome")
+	dbUrl := os.Getenv("DB_URL")
+
+	db, err := pgx.Connect(context.Background(), dbUrl)
 
 	if err != nil {
 		log.Fatalln("Error connecting to the database:", err)
