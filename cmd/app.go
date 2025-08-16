@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	dbUrl := os.Getenv("DB_URL")
+	dbUrl := os.Getenv("POSTGRES_URL")
 
 	db, err := pgx.Connect(context.Background(), dbUrl)
 
