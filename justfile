@@ -9,6 +9,9 @@ dev:
 prod:
     docker compose up -d
 
+kube:
+    helm upgrade --install sps-project ./helm-chart
+
 download:
     ./scripts/download-dataset.sh
 

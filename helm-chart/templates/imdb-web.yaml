@@ -1,0 +1,58 @@
+# Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imdb-web-deployment
+  labels:
+    app: imdb-web
+
+spec:
+  selector:
+    matchLabels:
+      app: imdb-web
+  template:
+    metadata:
+      labels:
+        app: imdb-web
+    spec:
+      containers:
+        - name: imdb-web
+          image: ghcr.io/alvi-se/sps-project:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: imdb-web-secret
+          
+      imagePullSecrets:
+        - name: regcred
+
+---
+
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: imdb-web-service
+spec:
+  selector:
+    app: imdb-web
+  ports:
+    - protocol: TCP
+      port: 80
+
+---
+
+# Secret
+# I'm using a secrret because the URL includes DB credentials
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: imdb-web-secret
+type: Opaque
+data:
+  POSTGRES_URL: {{ b64enc .Values.postgres.url }}
