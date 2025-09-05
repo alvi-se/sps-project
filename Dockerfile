@@ -1,5 +1,8 @@
 FROM golang:1.25-alpine AS builder
 
+# Disable debug mode
+ENV GIN_MODE=release
+
 RUN ["mkdir", "-p", "/app"]
 WORKDIR /app
 

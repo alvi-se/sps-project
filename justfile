@@ -9,6 +9,9 @@ dev:
 prod:
     docker compose up -d
 
+minikube:
+    eval $(minikube docker-env)
+
 kube:
     helm upgrade --install sps-project ./helm-chart
 

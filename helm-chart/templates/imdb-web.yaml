@@ -56,3 +56,4 @@ metadata:
 type: Opaque
 data:
   POSTGRES_URL: {{ b64enc .Values.postgres.url }}
+  GIN_MODE: {{ b64enc "release" }}

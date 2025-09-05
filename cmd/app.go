@@ -13,6 +13,7 @@ import (
 func main() {
 	dbUrl := os.Getenv("POSTGRES_URL")
 
+	log.Println("Connecting to database...")
 	db, err := pgx.Connect(context.Background(), dbUrl)
 
 	if err != nil {
