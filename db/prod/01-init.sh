@@ -18,19 +18,19 @@ if [[ -z "$POSTGRES_USER" ]] || [[ -z "$POSTGRES_DB" ]]; then
     exit 1
 fi
 
-cmd="psql --username $POSTGRES_USER -d $POSTGRES_DB"
+cmd="psql --username $POSTGRES_USER -d $POSTGRES_DB -h localhost"
 
 echo "Using command $cmd"
 
 echo "[*] Inserting data into tables"
 $cmd -c "\d"
-$cmd -c "COPY title_basics FROM '$dataset_dir/title.basics.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY name_basics FROM '$dataset_dir/name.basics.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY title_ratings FROM '$dataset_dir/title.ratings.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY title_akas FROM '$dataset_dir/title.akas.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY title_crew FROM '$dataset_dir/title.crew.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY title_episode FROM '$dataset_dir/title.episode.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
-$cmd -c "COPY title_principals FROM '$dataset_dir/title.principals.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_basics FROM '$dataset_dir/title.basics.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY name_basics FROM '$dataset_dir/name.basics.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_ratings FROM '$dataset_dir/title.ratings.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_akas FROM '$dataset_dir/title.akas.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_crew FROM '$dataset_dir/title.crew.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_episode FROM '$dataset_dir/title.episode.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
+$cmd -c "\COPY title_principals FROM '$dataset_dir/title.principals.tsv' DELIMITER E'\t' QUOTE E'\b' NULL '\N' CSV HEADER"
 
 echo "[+] Done!"
 printf "[+] Script done at %s. \n" "$(date)"
