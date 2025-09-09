@@ -49,4 +49,11 @@ the cluster:
 ```sh
 just kube
 ```
-
+The Postgres pod will create an empty `imdb` database. To fill it with production data (assuming that it has been downloaded as described above) we can port-forward the Postgres service to the host machine:
+```sh
+kubectl port-forward services/postgres-service 5432:5432
+```
+And then run the script on the host machine, in order to import the dataset on the host:
+```sh
+POSTGRES_USER=postgres POSTGRES_DB=imdb PGPASSWORD=password ./01-init.sh ./dataset
+```
