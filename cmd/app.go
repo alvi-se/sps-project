@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"time"
 
 	"github.com/alvi-se/sps-project/internal/routes"
 	"github.com/gin-gonic/gin"
@@ -14,7 +15,9 @@ func main() {
 	dbUrl := os.Getenv("POSTGRES_URL")
 
 	log.Println("Connecting to database...")
-	db, err := pgx.Connect(context.Background(), dbUrl)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	db, err := pgx.Connect(ctx, dbUrl)
 
 	if err != nil {
 		log.Fatalln("Error connecting to the database:", err)
