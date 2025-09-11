@@ -16,8 +16,8 @@ type TitleBasic struct {
 	PrimaryTitle   string
 	OriginalTitle  string
 	IsAdult        bool
-	StartYear      int
+	StartYear      sql.NullInt64
 	EndYear        sql.NullInt64
 	RuntimeMinutes sql.NullInt64
-	Genres         string
+	Genres         sql.NullString
 }
