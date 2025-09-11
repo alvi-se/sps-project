@@ -21,6 +21,8 @@ func main() {
 
 	if err != nil {
 		log.Fatalln("Error connecting to the database:", err)
+	} else {
+		log.Println("Connected to the database")
 	}
 
 	router := gin.Default()
@@ -29,5 +31,6 @@ func main() {
 	routes.InitController(db)
 	routes.AddRoutes(router)
 
+	log.Println("Starting server on port 8080")
 	router.Run()
 }
