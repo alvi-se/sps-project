@@ -20,16 +20,12 @@ spec:
       containers:
         - name: imdb-web
           image: ghcr.io/alvi-se/sps-project:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           envFrom:
             - secretRef:
                 name: imdb-web-secret
-          
-      imagePullSecrets:
-        - name: regcred
-
 ---
 
 # Service
@@ -43,12 +39,13 @@ spec:
     app: imdb-web
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
+      targetPort: 8080
 
 ---
 
 # Secret
-# I'm using a secrret because the URL includes DB credentials
+# I'm using a secret because the URL includes DB credentials
 
 apiVersion: v1
 kind: Secret
