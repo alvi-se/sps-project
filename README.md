@@ -44,7 +44,16 @@ just run
 ```
 
 ## Kubernetes Cluster
-If the app is to be deployed in a Kubernetes environment, then Helm has to be used. Run the following command to deploy
+If the app is to be deployed in a Kubernetes environment, then Helm has to be used.
+If the cluster has many nodes, then one has to be specified for the DB data, through
+the label `db=true`:
+```sh
+kubectl label nodes <your-node-name> db=true
+```
+
+⚠️ Before creating the cluster, change and set a secure password in the `./helm-chart/values.yaml` file, at `postgres.password` and `postgres.url`.
+
+Run the following command to deploy
 the cluster:
 ```sh
 just kube
@@ -55,5 +64,9 @@ kubectl port-forward services/postgres-service 5432:5432
 ```
 And then run the script on the host machine, in order to import the dataset on the host:
 ```sh
+cd ./db/prod/
+# Apply table models
+psql -U postgres -h localhost -d imdb -f 00-model.sql
+# Import data. This will take some minutes
 POSTGRES_USER=postgres POSTGRES_DB=imdb PGPASSWORD=password ./01-init.sh ./dataset
 ```
