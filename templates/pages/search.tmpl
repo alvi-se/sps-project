@@ -1,4 +1,4 @@
-{{define "pages/search.tmpl"}}
+{{define "pages/search.tmpl" }}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,25 +6,34 @@
         {{template "includes/head.tmpl"}}
     </head>
     <body>
-        {{template "includes/nav.tmpl"}}
+        {{template "includes/nav.tmpl" .}}
         <main class="container">
-            <form action="/search" method="get">
-            <fieldset role="group">
-                <input type="text" id="q" name="q" placeholder="Enter movie title..." value="{{.query}}">
-                <input type="submit" value="Search" class="btn btn-primary">
-            </fieldset>
-            </form>
             <div>
-            <h2>Search results for "{{.query}}"</h2>
+            <h2>Search results for "{{.query}}" - Page {{ .page }}</h2>
             {{range .titles}}
             <article>
             <header>
                 <a href="/movies/{{.Tconst}}">{{.PrimaryTitle}}</a>
             </header>
-            {{.StartYear}}{{if .EndYear -}} -{{- .EndYear}}{{end}} &bull; {{.TitleType}}
-            <footer>{{.Genres}}</footer>
+            {{if .StartYear.Valid }}{{ .StartYear.Int64 }}{{end}}{{if .EndYear.Valid -}} -{{- .EndYear.Int64}}{{end}} &bull; {{.TitleType}}
+            <footer>{{ if .Genres.Valid }}{{ .Genres.String }}{{ end }}</footer>
             </article>
             {{end}}
+            </div>
+
+            <div>
+                <a
+                    role="button"
+                    class="primary"
+                    {{if (le .prevPage 0)}} disabled {{end}}
+                    href="/search?q={{.query}}&page={{ .prevPage }}"
+                    >Previous</a>
+                <a
+                    role="button"
+                    class="primary"
+                    href="/search?q={{.query}}&page={{ .nextPage }}"
+                    {{ if eq (len .titles) 0 }} disabled {{end}}
+                    >Next</a>
             </div>
         </main>
 

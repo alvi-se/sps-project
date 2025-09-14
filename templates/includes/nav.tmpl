@@ -7,8 +7,13 @@
         <ul>
             <li>
             <form action="/search" method="get">
-                <fieldset role="group">
-                    <input type="text" name="q" placeholder="Search..." required>
+                <fieldset role="search">
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search..."
+                        {{ if .query }} value="{{.query}}" {{ end }}
+                        required>
                     <button type="submit" class="primary"><i class="bi bi-search"></i></button>
                 </fieldset>
             </form>

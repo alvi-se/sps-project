@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/alvi-se/sps-project/internal/models"
 	"github.com/gin-gonic/gin"
@@ -38,9 +39,24 @@ func (rc *RouteController) Home(c *gin.Context) {
 
 func (rc *RouteController) Search(c *gin.Context) {
 	if query := c.Query("q"); query != "" {
+		page := c.DefaultQuery("page", "1")
+		pageInt, err := strconv.Atoi(page)
+
+		if err != nil {
+			log.Println("Error parsing page number:", err)
+			c.HTML(400, "pages/400.tmpl", gin.H{})
+			return
+		}
+
+		offset := (pageInt - 1) * 10
+
 		rows, err := controller.db.Query(context.Background(), `
-			SELECT * FROM title_basics WHERE primary_title ILIKE '%' || $1 || '%'
-			`, query)
+			SELECT * FROM title_basics
+			WHERE SIMILARITY(primary_title, $1) > 0.3
+			ORDER BY SIMILARITY(primary_title, $1) DESC
+			LIMIT 10
+			OFFSET $2
+			`, query, offset)
 
 		if err != nil {
 			log.Println("Error searching titles:", err)
@@ -50,17 +66,19 @@ func (rc *RouteController) Search(c *gin.Context) {
 
 		titles, err := pgx.CollectRows(rows, pgx.RowToStructByPos[models.TitleBasic])
 
-		for _, value := range titles {
-			log.Println(value)
-		}
-
 		if err != nil {
 			log.Println("Error searching titles:", err)
 			c.HTML(500, "pages/500.tmpl", gin.H{})
 			return
 		}
 
-		c.HTML(200, "pages/search.tmpl", gin.H{"query": query, "titles": titles})
+		c.HTML(200, "pages/search.tmpl", gin.H{
+			"query":    query,
+			"titles":   titles,
+			"page":     pageInt,
+			"prevPage": pageInt - 1,
+			"nextPage": pageInt + 1,
+		})
 	} else {
 		c.Redirect(302, "/")
 	}

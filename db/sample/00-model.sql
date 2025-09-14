@@ -16,6 +16,9 @@ title_type can be:
 For tvSeries and tvMiniSeries, the end_year ca be NOT NULL. Also they can be joined with title_episode to get the episodes.
 */
 
+-- Trigrams, to allow fuzzy search
+CREATE EXTENSION pg_trgm;
+
 CREATE TABLE title_basics (
     tconst TEXT PRIMARY KEY,
     title_type TEXT,
