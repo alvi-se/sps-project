@@ -8,7 +8,7 @@ import (
 
 	"github.com/alvi-se/sps-project/internal/routes"
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	log.Println("Connecting to database...")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	db, err := pgx.Connect(ctx, dbUrl)
+	db, err := pgxpool.New(ctx, dbUrl)
 
 	if err != nil {
 		log.Fatalln("Error connecting to the database:", err)

@@ -10,15 +10,16 @@ import (
 	"github.com/alvi-se/sps-project/internal/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type RouteController struct {
-	db *pgx.Conn
+	db *pgxpool.Pool
 }
 
 var controller *RouteController
 
-func InitController(db *pgx.Conn) error {
+func InitController(db *pgxpool.Pool) error {
 	if db == nil {
 		return fmt.Errorf("database connection is nil")
 	}
