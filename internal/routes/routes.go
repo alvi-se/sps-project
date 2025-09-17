@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/alvi-se/sps-project/internal/models"
 	"github.com/gin-gonic/gin"
@@ -51,7 +52,10 @@ func (rc *RouteController) Search(c *gin.Context) {
 
 		offset := (pageInt - 1) * 10
 
-		rows, err := controller.db.Query(context.Background(), `
+		ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+		defer cancel()
+
+		rows, err := controller.db.Query(ctx, `
 			SELECT * FROM title_basics
 			WHERE primary_title % $1
 			ORDER BY SIMILARITY(primary_title, $1) DESC
