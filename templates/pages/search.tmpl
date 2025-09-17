@@ -32,7 +32,7 @@
                     role="button"
                     class="primary"
                     href="/search?q={{.query}}&page={{ .nextPage }}"
-                    {{ if eq (len .titles) 0 }} disabled {{end}}
+                    {{ if lt (len .titles) 10 }} disabled {{end}}
                     >Next</a>
             </div>
         </main>
