@@ -52,7 +52,7 @@ func (rc *RouteController) Search(c *gin.Context) {
 
 		rows, err := controller.db.Query(context.Background(), `
 			SELECT * FROM title_basics
-			WHERE SIMILARITY(primary_title, $1) > 0.3
+			WHERE primary_title % $1
 			ORDER BY SIMILARITY(primary_title, $1) DESC
 			LIMIT 10
 			OFFSET $2
