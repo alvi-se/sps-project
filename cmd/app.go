@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/alvi-se/sps-project/internal/routes"
@@ -22,7 +23,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error connecting to the database:", err)
 	} else {
-		log.Println("Connected to the database")
+		log.Println("Connected to the database, created a pool of", runtime.NumCPU(), "connections")
 	}
 
 	router := gin.Default()

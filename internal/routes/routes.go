@@ -52,13 +52,12 @@ func (rc *RouteController) Search(c *gin.Context) {
 
 		offset := (pageInt - 1) * 10
 
-		ctx, cancel := context.WithTimeout(context.Background(), 10 * time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 20 * time.Second)
 		defer cancel()
 
 		rows, err := controller.db.Query(ctx, `
 			SELECT * FROM title_basics
 			WHERE primary_title % $1
-			ORDER BY SIMILARITY(primary_title, $1) DESC
 			LIMIT 10
 			OFFSET $2
 			`, query, offset)
@@ -97,8 +96,11 @@ func (rc *RouteController) Movies(c *gin.Context) {
 func (rc *RouteController) Movie(c *gin.Context) {
 	id := c.Param("id")
 
+	ctx, cancel := context.WithTimeout(context.Background(), 20 * time.Second)
+	defer cancel()
+
 	rows, err := rc.db.Query(
-		context.Background(),
+		ctx,
 		"SELECT * FROM title_basics WHERE tconst = $1",
 		id)
 
