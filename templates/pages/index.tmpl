@@ -1,16 +1,40 @@
 {{define "pages/index.tmpl"}}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>IMDb 2.0</title>
-        {{template "includes/head.tmpl"}}
-    </head>
-    <body>
-        {{template "includes/nav.tmpl"}}
-        <main class="container">
-            Search a movie to get started!
-        </main>
-    </body>
+  <head>
+    <title>IMDb 2.0</title>
+    {{template "includes/head.tmpl"}}
+  </head>
+  <body>
+    {{template "includes/nav.tmpl"}}
+
+    <main class="container">
+      <section>
+        <h2>Most Watched</h2>
+
+        <!-- Prima riga -->
+        <div class="grid">
+          <article>
+            <header><a href="/movies/tt0286112"><strong>Shaolin Soccer</strong></a></header>
+            <img src="https://m.media-amazon.com/images/M/MV5BM2JhYTkzYmUtYjY1Mi00OWNjLTk4N2ItNDRkZTIyMzgyMjMyXkEyXkFqcGc@._V1_FMjpg_UX1053_.jpg" alt="Shaolin Soccer">
+            <footer><a href="/movies/tt0286112" role="button">View details</a></footer>
+          </article>
+
+          <article>
+            <header><a href="/movies/tt0112747"><strong>Fauci Crudeli</strong></a></header>
+            <img src="https://m.media-amazon.com/images/M/MV5BYmExOGViYTYtNzE4ZS00N2ZhLWFhNTUtMTY3MzM4MzIwY2Q3XkEyXkFqcGc@._V1_FMjpg_UX351_.jpg" alt="Fauci Crudeli">
+            <footer><a href="/movies/tt0112747" role="button">View details</a></footer>
+          </article>
+
+          <article>
+            <header><a href="/movies/tt5108870"><strong>Morbius</strong></a></header>
+            <img src="https://m.media-amazon.com/images/M/MV5BY2UzYzFiZWUtOGU5ZC00YTIxLWFlNGUtMGU1YmI4OWUzN2FmXkEyXkFqcGc@._V1_.jpg" alt="Inception">
+            <footer><a href="/movies/tt5108870" role="button">View details</a></footer>
+          </article>
+        </div>
+
+      </section>
+    </main>
+  </body>
 </html>
 {{end}}
-
