@@ -1,0 +1,1 @@
+db/prod/00-dump.sql filter=lfs diff=lfs merge=lfs -text
