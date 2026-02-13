@@ -11,7 +11,7 @@ services:
     image: postgres:latest
     container_name: sps-postgres
     volumes:
-      - ./db/prod_reduced/:/docker-entrypoint-initdb.d
+      - ./db/prod/:/docker-entrypoint-initdb.d
       - sps-postgres-data:/var/lib/postgresql/
     ports:
       - 5432:5432

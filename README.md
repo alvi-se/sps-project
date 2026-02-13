@@ -37,11 +37,14 @@ which will import the files using the `COPY FROM` command on the first run (`./d
 # Downloads the dataset and puts it into ./db/prod/dataset
 # WARNING -- THIS WILL DOWNLOAD ABOUT 8 GB OF DATA
 just download
-# Runs the DB
+# Runs the webapp
 just prod
-# Go app
-just run
 ```
+
+## Reduced DB
+The performance test of the app has been carried on a reduced version of
+the database, whose dump can be found in `./db/prod_reduced/`. The file
+`docker-compose.yaml` will use this one by default.
 
 ## Kubernetes Cluster
 If the app is to be deployed in a Kubernetes environment, then Helm has to be used.

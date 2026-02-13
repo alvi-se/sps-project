@@ -3,11 +3,14 @@ set dotenv-load
 run:
     go run cmd/app.go
 
+reduced:
+	docker compose up -d
+
 dev:
     docker compose -f docker-compose.dev.yaml up -d
 
 prod:
-    docker compose up -d
+    docker compose -f docker-compose.prod.yaml up -d
 
 minikube:
     eval $(minikube docker-env)
